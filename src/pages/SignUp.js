@@ -5,6 +5,8 @@ import Footer from '../components/Footer';
 import Button from '../components/Button';
 import React, {useState} from 'react';
 import {useHistory, Link} from 'react-router-dom';
+import {userSignUp} from '../_actions/user_action';
+import {useDispatch} from 'react-redux';
 
 const Fix =styled.div`
 min-height:100vh;
@@ -50,6 +52,7 @@ const Input = styled.input`
 
 const SignUp = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [user, setUser] = useState({
         name: '',
         username: '',
@@ -59,6 +62,55 @@ const SignUp = () => {
         bank_account: ''
     });
 
+    const onInputChange = async e => {
+        const{name, value} = e.target;
+        setUser({
+            ...user,
+            [name] : value
+        })
+    }
+
+    const formSubmit = async evt => {
+        evt.preventDefault();
+        console.log("signup attempt");
+        dispatch(userSignUp(user))
+            .then(response=> {
+                if(response.payload.key){
+                    history.push('/login')
+                }
+                if(response.payload.data){
+                    let errmsg='';
+                    console.log(response.payload.data)
+                    if(response.payload.data.username){
+                        if(response.payload.data.username[0]==="This field may not be blank."){
+                            {errmsg = errmsg + "아이디 값을 채워주세요"};
+                        }
+                        else{
+                            {errmsg = errmsg + "이미 존재하는 아이디입니다."}
+                        }
+                        console.log(errmsg);
+                    }
+                    else if(response.payload.data.password1){
+                        if(response.payload.data.password1[0]==="This password is too short. It must contain at least 8 characters."){
+                            {errmsg = errmsg + "패스워드는 8자 이상이어야합니다."};
+                        }
+                        else{
+                            {errmsg = errmsg + "패스워드가 너무 쉽습니다."};
+                        }
+                    }
+                    else if(response.payload.data.non_field_errors){
+                        if(response.payload.data.non_field_errors[0]==="The two password fields didn't match."){
+                            {errmsg = errmsg + "패스워드와 패스워드 확인이 다릅니다."};
+                        }
+                    }
+                    else{
+                        {errmsg = errmsg + "유효하지 않은 정보값입니다."};
+                    }
+                    alert(errmsg);
+                }
+            })
+    }
+
     return(
         <Fix>
             <Wrapper>
@@ -66,13 +118,13 @@ const SignUp = () => {
                 <BlankTop DesktopMargin='3' TabletMargin='3' MobileMargin='1'/>
                 <LargeP>회원가입</LargeP>
                 <GrayCard>
-                    <form>
-                        <Input placeholder="   이름" value={user.name} onChange={(e) => setUser({...user, name:e.value})}/>
-                        <Input placeholder="   아이디" value={user.username} onChange={(e) => setUser({...user, username:e.value})}/>
-                        <Input placeholder="   비밀번호" value={user.password} onChange={(e) => setUser({...user, password1:e.value})}/>
-                        <Input placeholder="   비밀번호 확인" value={user.password} onChange={(e) => setUser({...user, password2:e.value})}/>
-                        <Input placeholder="   핸드폰 번호" value={user.phone} onChange={(e) => setUser({...user, phone:e.value})}/>
-                        <Input placeholder="   환급 계좌번호" value={user.bank_account} onChange={(e) => setUser({...user, bank_account:e.value})}/>
+                    <form onSubmit={formSubmit}>
+                        <Input placeholder="   이름" name="name"  onChange={onInputChange}/>
+                        <Input placeholder="   아이디" name="username" onChange={onInputChange}/>
+                        <Input style={{fontFamily:"Roboto"}}type="password" placeholder="   비밀번호" name="password1" onChange={onInputChange}/>
+                        <Input style={{fontFamily:"Roboto"}}type="password" placeholder="   비밀번호 확인" name="password2" onChange={onInputChange}/>
+                        <Input placeholder="   핸드폰 번호" name="phone" onChange={onInputChange}/>
+                        <Input placeholder="   환급 계좌번호" name="bank_account" onChange={onInputChange}/>
                         <Button width='210' font="20" background="#3B8686" color="#FAECEC" marginTop="30" marginRight="20" type="submit">확인</Button>
                     </form>
                 </GrayCard>

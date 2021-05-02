@@ -1,4 +1,3 @@
-import { Divider } from 'antd';
 import {useHistory, Link} from "react-router-dom";
 import styled from 'styled-components';
 import Logo from '../assets/logo.jpg';
@@ -23,6 +22,7 @@ const Header = () => {
 
     const LogOut = async (evt) => {
         window.localStorage.setItem("isAuth", "false");
+        window.localStorage.setItem("accessToken", '');
         history.push(`/`);
     }
 

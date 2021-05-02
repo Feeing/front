@@ -4,8 +4,10 @@ import BlankTop from '../components/BlankTop';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
 import {useHistory, Link} from 'react-router-dom';
-import {Form} from 'antd';
 import React, {useState} from 'react';
+import {loginUser} from '../_actions/user_action';
+import {useDispatch} from 'react-redux';
+import { useEffect } from 'react';
 
 const Fix =styled.div`
 min-height:100vh;
@@ -50,9 +52,46 @@ const Input = styled.input`
 `
 
 const Login = () => {
+    const dispatch = useDispatch();
     const history = useHistory();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [info, setInfo] = useState({
+        username: '',
+        password: ''
+    });
+
+    const clear = async () => {
+        setInfo({ username:'', password:'' });
+    }
+
+    const formSubmit = async evt => {
+        evt.preventDefault();
+        console.log("login attempt")
+        console.log(info)
+        dispatch(loginUser(info))
+            .then(response=> {
+                console.log(response);
+                if(response.payload){
+                    window.localStorage.setItem('isAuth','true');
+                    window.localStorage.setItem('id', info.username);
+                    window.localStorage.setItem('accessToken', response.payload.key);
+                    history.push('/');
+                }
+                else{
+                    alert("로그인 오류");
+                    clear();
+                }
+            })
+    }
+
+    const onInputChange = async e => {
+        const{name, value} = e.target;
+        setInfo({
+            ...info,
+            [name] : value
+        })
+    }
+
+    useEffect(() => {}, [info]);
 
     return(
         <Fix>
@@ -64,10 +103,10 @@ const Login = () => {
                     <LargeP style={{color:"#3B8686", display:"inline-block"}}>아이디</LargeP>
                     <LargeP style={{display:"inline-block"}}>를 통한 로그인</LargeP>
                     <form>
-                        <Input placeholder="   아이디" value={username} onChange={(e) => setUsername(e.value)}/>
-                        <Input placeholder="   비밀번호" value={password} onChange={(e) => setPassword(e.value)}/>
-                        <Button width='210' font="20" background="#3B8686" color="#FAECEC" marginRight="20" type="submit">로그인</Button>
-                        <Button width='210' font="20" background="#042525" color="#FAECEC" marginRight="0" type="submit">취소</Button>
+                        <Input placeholder="   아이디" name='username' value={info.username} onChange={onInputChange}/>
+                        <Input style={{fontFamily:"Roboto"}}type="password" placeholder="   비밀번호" name='password' value={info.password} onChange={onInputChange}/>
+                        <Button width='210' font="20" background="#3B8686" color="#FAECEC" marginRight="20" type="submit" onClick={formSubmit}>로그인</Button>
+                        <Button width='210' font="20" background="#042525" color="#FAECEC" marginRight="0" onClick={clear}>취소</Button>
                         <Button width='210' font="20" background="#DADBDB" color="#000000" marginTop="10" marginRight="0" onClick={() => history.push(`/signup`)}>회원가입</Button>
                     </form>
                 </GrayCard>

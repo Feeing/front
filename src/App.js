@@ -17,9 +17,9 @@ function App() {
         <Route exact path="/signup" component={SignUp}/>
         <Route exact path="/register" component={Register}/>
         <Route exact path="/mypage" component={MyPage}/>
-        <Route exact path="/list" component = {List}/>
-        <Route exact path="/notice" component = {Notice}/>
-        <Route exact paht="/qna" component = {QnA}/>
+        <Route exact path="/list/:group_name/:group_id" component = {List}/>
+        <Route exact path="/notice/:group_name/:group_id" component = {Notice}/>
+        <Route exact path="/qna/:group_name/:group_id" component = {QnA}/>
       </Switch>
     </Router>
   );
