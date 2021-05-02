@@ -100,8 +100,8 @@ const MyPage = () => {
             <BlankTop DesktopMargin='3' TabletMargin='3' MobileMargin='1'/>
             <TransparentBox>
             <Explanation style={{display:"inline-block"}} size="35" margin_top="10" margin_left="10" color="#000000" contents="단체 목록"/>
-            <Explanation style={{display:"inline-block"}} size="25" margin_top="10" margin_left="1220" color="#000000" contents="새로운 단체 만들기"/>
-            <Button height='40' width="40" font="23" background="#55967E" color="#FFFFFF" marginTop="5" marginRight="20"onClick={() => history.push(`/register`)}>+</Button>
+            <Explanation style={{display:"inline-block"}} size="25" margin_top="10" margin_left="1200" color="#000000" contents="새로운 단체 만들기"/>
+            <Button height='40' width="50" font="23" background="#55967E" color="#FFFFFF" marginTop="5" marginRight="10"onClick={() => history.push(`/register`)}>+</Button>
             </TransparentBox>
             <Box>
                 {list.map((account, i) => {

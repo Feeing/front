@@ -72,6 +72,7 @@ const Notice = ({match}) => {
     const [isShowed, setIsShowed]= useState([]);
     const [notice, setNotice] = useState([]);
     const [isSet, setIsSet] = useState('false');
+    const [founder, setFounder] = useState('');
 
     const setShowArray = async notice => {
         const nextshow = show.concat({id: notice.id, opened: 'false'});
@@ -93,16 +94,36 @@ const Notice = ({match}) => {
             }
         });
         setIsShowed(show);
+        console.log(isShowed)
         setNum(num+1);
     };
 
+    const setting = async(arr)=>{
+        if(isSet==='false'){
+            console.log("2",arr);
+            arr.map(async (qna) => {
+                await setShowArray(qna);
+            });
+            setIsShowed(show);
+        }
+        else{
+            isShowed.map(async (q) => {
+                await setShowArray(q);
+            });
+        }
+    }
+
     useEffect(() => {
+        let arr=[];
         if(isSet==='false'){
             dispatch(getNotice(group_id))
             .then (response => {
                 console.log(response.payload)
                 if(response.payload){
+                    arr=response.payload;
+                    setting(arr);
                     setNotice(response.payload);
+                    if(response.payload.length>0){setFounder(response.payload[0].founder_name)};
                 }
                 else{
                     console.log("error")
@@ -110,14 +131,8 @@ const Notice = ({match}) => {
             })
             setIsSet('true');
         }
-        notice.map(async (notice) => {
-            await setShowArray(notice);
-        });
-        setIsShowed(show);
-        isShowed.map(async (showed) => {
-            await setShowArray(showed);
-        });
-    },[isSet]);
+        setting(arr);
+    },[num]);
 
     return(
         <Fix>
@@ -127,7 +142,13 @@ const Notice = ({match}) => {
             <ContentWrapper>
             <ButtonGroup btnlist="#BBBBBB" btnnotice="#2BA700" btnqna="#BBBBBB" txtlist="#FFFFFF" txtnotice="#FFFFFF" txtqna="#FFFFFF" group_name={group_name} group_id={group_id}/>
             <ListWrapper style={{textAlign:"center"}}>
+                <div style={{display:"flex", flexDirection:"row"}}>
                 <Explanation size="40" margin_top="20" contents={String(`<${group_name}> 공지`)}/>
+                {founder===window.localStorage.getItem('id')?
+                <Button style={{marginRight:"0px", marginTop:"20px"}}height="50" width='80' font="23" background="#008F39" color="#FAECEC" round="30">작성</Button>
+                : null
+                }
+                </div>
                 <BlankTop DesktopMargin='3' TabletMargin='3' MobileMargin='1'/>
                 <GrayList style={{backgroundColor:"#DADBDB"}}>
                     <Explanation width="8" margin_left="40" size="25" margin_top="15" contents="번호"/>

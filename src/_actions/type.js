@@ -5,3 +5,6 @@ export const GET_INFO = "get_info";
 export const GET_HISTORY = "get_history";
 export const GET_NOTICE = "get_notice";
 export const GET_QNA = "get_qna";
+export const UPDATE_GROUP = "update_group";
+export const UPDATE_TITLE = "update_title";
+export const UPDATE_MEMO = "update_memo";

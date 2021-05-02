@@ -97,12 +97,30 @@ const QnA = ({match}) => {
         console.log(isShowed);
     };
 
+    const setting = async(arr)=>{
+        if(isSet==='false'){
+            console.log("2",arr);
+            arr.map(async (qna) => {
+                await setShowArray(qna);
+            });
+            setIsShowed(show);
+        }
+        else{
+            isShowed.map(async (q) => {
+                await setShowArray(q);
+            });
+        }
+    }
+
     useEffect(() => {
+        let arr=[];
         if(isSet==='false'){
             dispatch(getQna(group_id))
             .then (response => {
-                console.log(response.payload)
                 if(response.payload){
+                    arr=response.payload;
+                    setting(arr);
+                    console.log("1",arr);
                     setQna(response.payload);
                 }
                 else{
@@ -111,14 +129,8 @@ const QnA = ({match}) => {
             })
             setIsSet('true');
         }
-        qna.map(async (qna) => {
-            await setShowArray(qna);
-        });
-        setIsShowed(show);
-        isShowed.map(async (showed) => {
-            await setShowArray(showed);
-        });
-    },[isSet]);
+        setting(arr);
+    },[num]);
 
     return(
         <Fix>
@@ -128,12 +140,15 @@ const QnA = ({match}) => {
             <ContentWrapper>
             <ButtonGroup btnlist="#BBBBBB" btnnotice="#BBBBBB" btnqna="#2BA700" txtlist="#FFFFFF" txtnotice="#FFFFFF" txtqna="#FFFFFF" group_name={group_name} group_id={group_id}/>
             <ListWrapper style={{textAlign:"center"}}>
+                <div style={{display:"flex", flexDirection:"row"}}>
                 <Explanation size="40" margin_top="20" contents={String(`<${group_name}> 문의`)}/>
+                <Button style={{marginRight:"0px", marginTop:"20px"}}height="50" width='80' font="23" background="#008F39" color="#FAECEC" round="30">작성</Button>
+                </div>
                 <BlankTop DesktopMargin='3' TabletMargin='3' MobileMargin='1'/>
                 <GrayList style={{backgroundColor:"#DADBDB"}}>
-                    <Explanation width="8" margin_left="40" size="25" margin_top="15" contents="번호"/>
-                    <Explanation width="10" margin_left="40" size="25" margin_top="15" contents="답변여부"/>
-                    <Explanation width="40" margin_left="40" size="25" margin_top="15" contents="제목"/>
+                    <Explanation width="6" margin_left="40" size="25" margin_top="15" contents="번호"/>
+                    <Explanation width="8" margin_left="40" size="25" margin_top="15" contents="답변여부"/>
+                    <Explanation width="45" margin_left="40" size="25" margin_top="15" contents="제목"/>
                     <Explanation width="15" margin_left="40" size="25" margin_top="15" contents="작성자"/>
                     <Explanation width="25" margin_left="40" size="25" margin_top="15" contents="작성일"/>
                 </GrayList>
@@ -142,8 +157,8 @@ const QnA = ({match}) => {
                     return (
                     <div>
                     <GrayList>
-                        <Explanation width="8" margin_left="40" size="20" margin_top="15" contents={String(`${question.id}`)}/>
-                        <Explanation width="10" margin_left="40" size="20" margin_top="15" contents={String(answered)}/>
+                        <Explanation width="6" margin_left="40" size="20" margin_top="15" contents={String(`${question.id}`)}/>
+                        <Explanation width="8" margin_left="40" size="20" margin_top="15" contents={String(answered)}/>
                         <TitleButton type="button" onClick={() => {onToggle(question.id)}}>{question.title}</TitleButton>
                         <Explanation width="15" margin_left="40" size="20" margin_top="15" contents={String(`${question.writer}`)}/>
                         <Explanation width="25" margin_left="40" size="20" margin_top="15" contents={String(`${String(question.pub_date).substring(0,10)}`)}/>
@@ -153,8 +168,8 @@ const QnA = ({match}) => {
                                 if(txt.opened==='true') {
                                     return (
                                         <div>
-                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"white", border:"solid 1px", padding:"20px 40px"}}>{question.body}</div>
-                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"#DDDDDD", border:"solid 1px", padding:"20px 40px"}}>{question.answers.length<=0? '아직 답변이 달리지 않았습니다.': question.answers[0].content}</div>
+                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"white", border:"solid 1px", padding:"10px 40px"}}><p style={{marginTop:"10px",fontFamily:"NanumSquare", fontSize:"25px"}}>Q</p>{question.body}</div>
+                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"#DDDDDD", border:"solid 1px", padding:"10px 40px"}}>{question.answers.length<=0? '아직 답변이 달리지 않았습니다.': <><p style={{marginTop:"10px",fontFamily:"NanumSquare", fontSize:"25px"}}>A</p>{question.answers[0].content}</>}</div>
                                         </div>
                                     );
                                 }
