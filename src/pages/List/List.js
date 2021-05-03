@@ -210,9 +210,9 @@ const List = ({match}) => {
                     :
                     <Explanation style={{display: "inline-block", width:"auto"}}size="40" margin_top="52" margin_left="0" contents={String(`<${group_name}> 거래내역`)}/>
                 }
-                <Box style={{marginTop:"0px", width:"700px", flexDirection:"row", textAlign:"center"}}>
-                    <ExplaDiv>현재 잔액 &nbsp;&nbsp; {String(balance).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원&nbsp;&nbsp;&nbsp;&nbsp;</ExplaDiv>
-                    <ExplaDiv>누적 지출액 &nbsp;&nbsp; {String(`${total}`).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</ExplaDiv>
+                <Box style={{marginTop:"0px", width:"600px", flexDirection:"row", textAlign:"center"}}>
+                    <ExplaDiv>현재 잔액 &nbsp;&nbsp;&nbsp;&nbsp; {String(balance).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원&nbsp;&nbsp;&nbsp;</ExplaDiv>
+                    <ExplaDiv>누적 지출액 &nbsp;&nbsp;&nbsp; {String(`${total}`).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</ExplaDiv>
                 </Box>
                 {founder===window.localStorage.getItem('id') ? 
                 <div style={{display: "flex", flexDirection:"row"}}>

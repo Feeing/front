@@ -168,8 +168,8 @@ const QnA = ({match}) => {
                                 if(txt.opened==='true') {
                                     return (
                                         <div>
-                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"white", border:"solid 1px", padding:"10px 40px"}}><p style={{marginTop:"10px",fontFamily:"NanumSquare", fontSize:"25px"}}>Q</p>{question.body}</div>
-                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"#DDDDDD", border:"solid 1px", padding:"10px 40px"}}>{question.answers.length<=0? '아직 답변이 달리지 않았습니다.': <><p style={{marginTop:"10px",fontFamily:"NanumSquare", fontSize:"25px"}}>A</p>{question.answers[0].content}</>}</div>
+                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"white", border:"solid 1px", padding:"10px 40px 30px 40px"}}><p style={{marginTop:"10px",fontFamily:"NanumSquare", fontSize:"25px"}}>Q</p>{question.body}</div>
+                                        <div style={{width: "94.7%", fontSize:"20px", backgroundColor:"#DDDDDD", border:"solid 1px", padding:"10px 40px 30px 40px"}}>{question.answers.length<=0? '아직 답변이 달리지 않았습니다.': <><p style={{marginTop:"10px",fontFamily:"NanumSquare", fontSize:"25px"}}>A</p>{question.answers[0].content}</>}</div>
                                         </div>
                                     );
                                 }

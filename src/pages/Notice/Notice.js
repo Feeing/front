@@ -168,7 +168,7 @@ const Notice = ({match}) => {
                     {isShowed.map((txt, i) => {
                             if(txt.id===info.id){ 
                                 if(txt.opened==='true') {
-                                return (<div style={{width: "94.7%", fontSize:"20px", backgroundColor:"white", border:"solid 1px", padding:"20px 40px"}}>{info.body}</div>);}
+                                return (<div style={{width: "94.7%", fontSize:"20px", backgroundColor:"white", border:"solid 1px", padding:"20px 40px"}}>{info.body.split('\n').map((line)=>{return <>{line}<br/></>})}</div>);}
                             }
                         })
                     }
