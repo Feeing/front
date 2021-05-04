@@ -1,3 +1,6 @@
+
+![image](https://user-images.githubusercontent.com/55429237/116961148-81c73c80-acdd-11eb-982e-9074e173e2f9.png)
+
 ### FEEing
 
 ## 공동 자금을 투명하게! 편리하게!
