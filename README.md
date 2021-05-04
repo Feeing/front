@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/55429237/116961353-13cf4500-acde-11eb-869c-00c336879e3e.png" width="300">
-# FEEing
 
+# FEEing
 ### 공동 자금을 투명하게! 편리하게!
 
 ## 주요 서비스
@@ -10,4 +10,4 @@
 4. 공지사항 및 문의사항 확인 가능
 
 
-## 우리은행 해커톤
+### 우리은행 해커톤
