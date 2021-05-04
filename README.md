@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/55429237/116961353-13cf4500-acde-11eb-869c-00c336879e3e.png" width="300" height="300">
+<img src="https://user-images.githubusercontent.com/55429237/116961353-13cf4500-acde-11eb-869c-00c336879e3e.png" width="300">
 # FEEing
 
 ### 공동 자금을 투명하게! 편리하게!
